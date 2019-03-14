@@ -123,4 +123,19 @@ class DateTimeFormatterTest extends TestCase
         $filter = new DateTimeFormatter();
         $result = $filter->filter('2013-31-31');
     }
+
+    public function testInvalidInputUnfilteredWhenExceptionsOptionIsDisabled()
+    {
+        $filter = new DateTimeFormatter();
+        $filter->setThrowInvalidDateException(false);
+        $invalidValue = '2013-31-31';
+        $this->assertSame($invalidValue, $filter->filter($invalidValue));
+    }
+
+    public function testInvalidInputUnfilteredWhenExceptionsOptionIsDisabledViaConstructor()
+    {
+        $filter = new DateTimeFormatter(['throwInvalidDateException' => false]);
+        $invalidValue = '2013-31-31';
+        $this->assertSame($invalidValue, $filter->filter($invalidValue));
+    }
 }

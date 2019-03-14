@@ -710,6 +710,35 @@ All options can be set at instantiation or by using a related method. For exampl
 methods for `target` are `getTarget()` and `setTarget()`. You can also use the `setOptions()` method
 which accepts an array of all options.
 
+## DateTimeFormatter
+
+Returns parsable date input string formatted according to format.
+
+### Supported Options
+
+The following options are supported for `Zend\Filter\DateTimeFormatter`:
+
+- `format`: A format string compatible with [DateTime::format](http://php.net/manual/en/datetime.format.php). Defaults to `DateTime::ISO8601` which [is not compliant with ISO-8601](http://php.net/manual/en/class.datetimeinterface.php#datetime.constants.iso8601).
+- `throwInvalidDateException`: Defaults to `true`. Set to `false` to return the input value unfiltered in the event that DateTime is unable to parse the input.
+
+### Basic Usage
+
+```php
+$filter = new Zend\Filter\DateTimeFormatter();
+
+print $filter->filter('1/2/03');
+```
+
+Returns "2003-01-02T00:00:00+0000".
+
+```php
+$filter = new Zend\Filter\DateTimeFormatter();
+
+print $filter->filter('03-1-2');
+```
+
+Returns "2003-01-02T00:00:00+0000".
+
 ## Digits
 
 Returns the string `$value`, removing all but digits.

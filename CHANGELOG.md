@@ -22,7 +22,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- An invalid date string input caused an exception to be thrown by filter(). Added an option to return unfiltered input in the event that the input cannot be formatted.
+
 
 ## 2.9.1 - 2018-12-17
 

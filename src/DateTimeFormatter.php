@@ -16,9 +16,21 @@ class DateTimeFormatter extends AbstractFilter
     /**
      * A valid format string accepted by date()
      *
+     * @todo This default should be changed to DateTime::ATOM or perhaps DateTime::RFC3339
+     * @see http://php.net/manual/en/class.datetimeinterface.php#datetime.constants.iso8601
+     * @see https://github.com/zendframework/zend-filter/issues/58
+     *
      * @var string
      */
     protected $format = DateTime::ISO8601;
+
+    /**
+     * Whether or not to throw an exception in the event that DateTime
+     * is unable to parse the input
+     *
+     * @var bool
+     */
+    protected $throwInvalidDateException = true;
 
     /**
      * Sets filter options
@@ -46,6 +58,20 @@ class DateTimeFormatter extends AbstractFilter
     }
 
     /**
+     * Set whether or not to throw an exception in the event that DateTime
+     * cannot parse the input value
+     *
+     * @param  bool $throwException
+     * @return self
+     */
+    public function setThrowInvalidDateException(bool $throwException): self
+    {
+        $this->throwInvalidDateException = $throwInvalidDateException;
+
+        return $this;
+    }
+
+    /**
      * Filter a datetime string by normalizing it to the filters specified format
      *
      * @param  DateTime|string|integer $value
@@ -57,6 +83,9 @@ class DateTimeFormatter extends AbstractFilter
         try {
             $result = $this->normalizeDateTime($value);
         } catch (\Exception $e) {
+            if (!$this->throwInvalidDateException) {
+                return $value;
+            }
             // DateTime threw an exception, an invalid date string was provided
             throw new Exception\InvalidArgumentException('Invalid date string provided', $e->getCode(), $e);
         }
