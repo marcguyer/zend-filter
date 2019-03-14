@@ -61,10 +61,10 @@ class DateTimeFormatter extends AbstractFilter
      * Set whether or not to throw an exception in the event that DateTime
      * cannot parse the input value
      *
-     * @param  bool $throwException
+     * @param  bool throwInvalidDateException
      * @return self
      */
-    public function setThrowInvalidDateException(bool $throwException): self
+    public function setThrowInvalidDateException(bool $throwInvalidDateException): self
     {
         $this->throwInvalidDateException = $throwInvalidDateException;
 
@@ -83,7 +83,7 @@ class DateTimeFormatter extends AbstractFilter
         try {
             $result = $this->normalizeDateTime($value);
         } catch (\Exception $e) {
-            if (!$this->throwInvalidDateException) {
+            if (! $this->throwInvalidDateException) {
                 return $value;
             }
             // DateTime threw an exception, an invalid date string was provided
