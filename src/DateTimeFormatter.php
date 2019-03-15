@@ -16,10 +16,6 @@ class DateTimeFormatter extends AbstractFilter
     /**
      * A valid format string accepted by date()
      *
-     * @todo This default should be changed to DateTime::ATOM or perhaps DateTime::RFC3339
-     * @see http://php.net/manual/en/class.datetimeinterface.php#datetime.constants.iso8601
-     * @see https://github.com/zendframework/zend-filter/issues/58
-     *
      * @var string
      */
     protected $format = DateTime::ISO8601;
